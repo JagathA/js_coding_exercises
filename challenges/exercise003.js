@@ -4,7 +4,7 @@ export function getSquares(nums) {
   if (nums === undefined) throw new Error("nums is required");
   // Your code here!
 
-  nums.forEach(function(number, index){
+  nums.forEach((number, index)=>{
     nums[index] = number*number;
   })
 
