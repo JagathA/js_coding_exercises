@@ -81,7 +81,7 @@ export function getMeanScore(scores) {
   // Add your code here!
   let sum = 0;
   for (let i = 0; i < scores.length; i++ ){
-    sum+=scores[i]
+    sum+=scores[i];
   }
   let mean =parseFloat((sum/scores.length).toFixed(2));
   return mean;
@@ -97,10 +97,10 @@ export function simpleFizzBuzz(n) {
   }
   else {
     let result = "";
-    if (n % 3 == 0) {
+    if (n % 3 === 0) {
       result += "fizz";
     }
-    if (n % 5 == 0) {
+    if (n % 5 === 0) {
       result += "buzz";
     }
     return result;
