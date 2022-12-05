@@ -45,7 +45,6 @@ export const arrShift = (arr) => {
   if (arr === undefined) throw new Error("arr is required");
 
   [arr[0], arr[arr.length - 1]] = [arr[arr.length - 1], arr[0]];
-  console.log("swapped arry", arr);
   return arr;
 };
 
@@ -66,10 +65,10 @@ export const findNeedle = (haystack, searchTerm) => {
 
 export const getWordFrequencies = (str) => {
   if (str === undefined) throw new Error("str is required");
-  // Your code here!
+
   const words = str
     .replace(/[^A-Za-z0-9\s]/g, "")
-    .replace(/\s{2,}/g, " ")
+    //  .replace(/\s{2,}/g, " ")
     .toLowerCase()
     .split(/\s/);
 
