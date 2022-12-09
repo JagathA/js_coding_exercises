@@ -16,23 +16,13 @@ export function getBusNumbers(people) {
 
 export function countSheep(arr) {
   if (arr === undefined) throw new Error("arr is required");
-  let numSheep = 0;
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] == "sheep") {
-      numSheep++;
-    }
-  }
-  return numSheep;
+  return arr.filter((animal) => animal === "sheep").length;
 }
 
 export function hasMPostCode(person) {
   if (person === undefined) throw new Error("person is required");
-  if (
+  return (
     person.address.postCode.substring(0, 1) === "M" &&
     person.address.city === "Manchester"
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+  );
 }
