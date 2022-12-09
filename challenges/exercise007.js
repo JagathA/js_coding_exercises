@@ -4,6 +4,11 @@
  */
 export const sumDigits = (n) => {
   if (n === undefined) throw new Error("n is required");
+
+  return n
+    .toString()
+    .split("")
+    .reduce((sum, currenDigit) => sum + parseInt(currenDigit), 0);
 };
 
 /**
@@ -17,10 +22,15 @@ export const sumDigits = (n) => {
 export const createRange = (start, end, step) => {
   if (start === undefined) throw new Error("start is required");
   if (end === undefined) throw new Error("end is required");
-  if (step === undefined)
-    console.log(
-      "FYI: Optional step parameter not provided. Remove this check once you've handled the optional step!"
-    );
+
+  const localStep = step === undefined ? 1 : step;
+
+  const matrix = [];
+
+  for (let i = start; i <= end; i += localStep) {
+    matrix.push(i);
+  }
+  return matrix;
 };
 
 /**
@@ -55,6 +65,26 @@ export const createRange = (start, end, step) => {
 export const getScreentimeAlertList = (users, date) => {
   if (users === undefined) throw new Error("users is required");
   if (date === undefined) throw new Error("date is required");
+
+  const USAGE_ALERT_TIME_LIMIT = 100; /* in Minutes */
+  const highUsageusers = [];
+
+  for (const user in users) {
+    for (const dateScreenTime in users[user].screenTime) {
+      if (users[user].screenTime[dateScreenTime].date === date) {
+        let userTotalUsagetime = 0;
+        for (const appUsgaeTime in users[user].screenTime[dateScreenTime]
+          .usage) {
+          userTotalUsagetime +=
+            users[user].screenTime[dateScreenTime].usage[appUsgaeTime];
+          if (userTotalUsagetime > USAGE_ALERT_TIME_LIMIT) {
+            highUsageusers.push(users[user].username);
+          }
+        }
+      }
+    }
+  }
+  return highUsageusers;
 };
 
 /**
@@ -69,6 +99,25 @@ export const getScreentimeAlertList = (users, date) => {
  */
 export const hexToRGB = (hexStr) => {
   if (hexStr === undefined) throw new Error("hexStr is required");
+  if (!isHexColor(hexStr)) return null;
+
+  function isHexColor(hex) {
+    return (
+      typeof hex === "string" &&
+      hex.length === 7 &&
+      hex[0] === "#" &&
+      !isNaN(Number("0x" + hex.substring(1, 6)))
+    );
+  }
+
+  const hexToDec = (hex) => parseInt(hex, 16);
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexStr);
+
+  const r = hexToDec(result[1]);
+  const g = hexToDec(result[2]);
+  const b = hexToDec(result[3]);
+
+  return `rgb(${r},${g},${b})`;
 };
 
 /**
@@ -83,4 +132,48 @@ export const hexToRGB = (hexStr) => {
  */
 export const findWinner = (board) => {
   if (board === undefined) throw new Error("board is required");
+
+  const flattendBoard = board.flat();
+
+  /* Wiining Patterns */
+
+  const winningPatterns = [
+    [0, 1, 2] /* Horizontal */,
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6] /*vertical */,
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8] /* Diagonal */,
+    [2, 4, 6],
+  ];
+
+  const IsWinner = (player) => {
+    const playerPositions = flattendBoard
+      .map((element, index) => {
+        if (element === player) {
+          return index;
+        }
+      })
+      .filter((element) => element >= 0);
+
+    for (const winningLine of winningPatterns) {
+      const playerLine = winningLine.filter((winningPositions) => {
+        return playerPositions.indexOf(winningPositions) !== -1;
+      });
+
+      if (playerLine.length === winningLine.length) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  if (IsWinner("0")) {
+    return "0";
+  } else if (IsWinner("X")) {
+    return "X";
+  } else {
+    return null;
+  }
 };
