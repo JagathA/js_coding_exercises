@@ -104,13 +104,8 @@ export const areWeCovered = (staff, day) => {
   let numOnDuty = 0;
   const REQUIRED_NUM_OF_STAFF = 3;
   for (const key in staff) {
-    //let numOnDuty = 0;
-
-    //console.log("**** staff",key );
-
     numOnDuty += 
-    staff[key].rota.reduce((numOnDuty, v) => (v === day ? numOnDuty + 1 : numOnDuty), 0);
-  //  console.log("***** staff",staff[key], numOnDuty  );
+    staff[key].rota.reduce((numOnDuty, rotaDay) => (rotaDay === day ? numOnDuty + 1 : numOnDuty), 0);
   }
   return (numOnDuty >= REQUIRED_NUM_OF_STAFF);
 
