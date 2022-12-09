@@ -45,6 +45,7 @@ export const arrShift = (arr) => {
   if (arr === undefined) throw new Error("arr is required");
 
   [arr[0], arr[arr.length - 1]] = [arr[arr.length - 1], arr[0]];
+
   return arr;
 };
 
