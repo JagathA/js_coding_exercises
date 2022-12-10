@@ -30,12 +30,7 @@ export const reverseNumber = (n) => {
 export const sumArrays = (arrs) => {
   if (arrs === undefined) throw new Error("arrs is required");
 
-  const flattened = arrs.reduce(
-    (accumulator, currentValue) => accumulator.concat(currentValue),
-    []
-  );
-
-  return flattened.reduce(
+  return arrs.flat().reduce(
     (accumulator, currentValue) => accumulator + currentValue,
     0
   );
